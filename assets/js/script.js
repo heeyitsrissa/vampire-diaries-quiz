@@ -62,18 +62,35 @@ const buttonEl = document.querySelector(".buttons");
 
 const nextBtn = document.getElementById("next");
 
+const highScores = document.querySelector('.highscores');
+
+const highScoreList = document.getElementById('highscorelist');
+
+const submitBtn = document.getElementById('submitHighscore');
+
+const scoreBtn = document.getElementById('showscores')
+
+const alertMessage = document.querySelector("alertmessage")
+
+let scoreCard = localStorage.getItem('scoreCard');
+
+
+
+
 let currentQuestion = 0;
 let score = 0;
 let secondsLeft = 60;
 let timer;
 
 quizEl.style.display = "none";
+highScores.style.display = 'none';
 
 function startGame() {
   currentQuestion = 0;
   score = 0;
   document.getElementById("intro").style.display = "none";
   quizEl.style.display = "block";
+  nextBtn.style.display = 'none';
   showQuestions();
   startTimer();
 }
@@ -83,7 +100,7 @@ function startTimer() {
     secondsLeft--;
     timerEl.textContent = secondsLeft;
 
-    if (secondsLeft === 0) {
+    if (secondsLeft == 0) {
       endGame();
     }
   }, 1000);
@@ -103,27 +120,28 @@ function showQuestions() {
     if (answer.correct) {
       button.dataset.correct = answer.correct;
     }
+   
   });
   answerEl.addEventListener("click", correctAnswer);
 }
 
 function correctAnswer(e) {
   const selectBtn = e.target;
-  const isCorrect = selectBtn.dataset.correct === true;
+  const isCorrect = selectBtn.dataset.correct;
+
   if (isCorrect) {
-    selectBtn.classList.add("correct");
-    score++;
+  
   } else {
-    selectBtn.classList.add("incorrect");
-    secondsLeft -= 10;
-    if (secondsLeft === 0) {
-      secondsLeft = 0;
-    }
+   
+   secondsLeft -= 10;
   }
+  if (secondsLeft === 0) {
+    secondsLeft = 0;
+  }
+  
   disableButtons();
-  setTimeout(() => {
     showNextQuestion();
-  }, 1000);
+  
 }
 
 function disableButtons() {
@@ -137,6 +155,7 @@ function showNextQuestion(){
     if(currentQuestion < myQuestions.length){
         showQuestions();
     }else{
+       nextBtn.style.display = 'block';
         endGame();
     }
 }
@@ -145,6 +164,16 @@ function endGame(){
     clearInterval(timer);
 }
 
-
 startBtn.addEventListener("click", startGame);
 
+function logScores(){
+  highScores.style.display = 'block';
+  quizEl.style.display = 'none';
+
+}
+
+
+
+
+
+nextBtn.addEventListener('click', logScores);

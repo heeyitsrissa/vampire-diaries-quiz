@@ -18,10 +18,26 @@ h1::after {
     margin-left: 15px;
 }
 
+#intro{
+    display: flex;
+    justify-content: center;
+
+}
+
+#start {
+    font-size: 30px;
+    background-color: #800000;
+    border-radius: 20px;
+    margin: 20px;
+    padding: 10px;
+    color:#696969
+}
+
+
 #timer {
     display: flex;
     justify-content: center;
-    color: #fff;
+    color: #696969;
 }
 h2::before, h2::after {
     content: '꒷꒦';
@@ -34,11 +50,15 @@ body{
 }
 
 .quiz {
+    display: flex;
+    justify-content: center;
     background-color: #800000;
     width: 90%;
     max-width: 600px;
     margin: 100px auto 0;
     border-radius: 10px;
+   border-style: solid 5px;
+   border-color: black;
 }
 
 #question{
@@ -48,3 +68,31 @@ body{
     font-size: 25px;
 }
 
+.highscores{
+    background-color: #800000;
+    color: #696969;
+    width: 90%;
+    max-width: 600px;
+    margin: 100px auto 0;
+    border-radius: 5px;
+}
+
+#answers {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.buttons{
+    background-color: #696969;
+    color: #800000;
+    border-color: black;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+#next {
+   background-color: #696969;
+   color: #800000;
+   margin-left: 280px;
+   border-radius: 5px;
+}
