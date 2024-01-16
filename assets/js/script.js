@@ -60,37 +60,44 @@ const answerEl = document.getElementById("answers");
 
 const buttonEl = document.querySelector(".buttons");
 
-const nextBtn = document.getElementById("next");
-
 const highScores = document.querySelector('.highscores');
 
-const highScoreList = document.getElementById('highscorelist');
+let highScoreList = document.getElementById('highscorelist');
 
 const submitBtn = document.getElementById('submitHighscore');
 
-const scoreBtn = document.getElementById('showscores')
+let playerInitials = document.getElementById('initials');
 
-const alertMessage = document.querySelector("alertmessage")
+const scoreEl = document.querySelector('.score');
 
 let scoreCard = localStorage.getItem('scoreCard');
-
+ 
+let playersScore = document.getElementById('playerScore')
+let scorecardInitials = document.getElementById('playerInitials')
 
 
 
 let currentQuestion = 0;
-let score = 0;
 let secondsLeft = 60;
 let timer;
+let score = 0;
+
+
+
 
 quizEl.style.display = "none";
 highScores.style.display = 'none';
 
+function init(){
+  getScore()
+}
+
 function startGame() {
   currentQuestion = 0;
   score = 0;
-  document.getElementById("intro").style.display = "none";
+  initials = '';
+  document.getElementById('intro').style.display = "none";
   quizEl.style.display = "block";
-  nextBtn.style.display = 'none';
   showQuestions();
   startTimer();
 }
@@ -100,8 +107,10 @@ function startTimer() {
     secondsLeft--;
     timerEl.textContent = secondsLeft;
 
-    if (secondsLeft == 0) {
-      endGame();
+    if (secondsLeft === 0) {
+      clearInterval(timer);
+      quizEl.style.display = 'none';
+      highScores.style.display = 'block';
     }
   }, 1000);
   showQuestions();
@@ -119,6 +128,7 @@ function showQuestions() {
     answerEl.appendChild(button);
     if (answer.correct) {
       button.dataset.correct = answer.correct;
+     
     }
    
   });
@@ -128,10 +138,11 @@ function showQuestions() {
 function correctAnswer(e) {
   const selectBtn = e.target;
   const isCorrect = selectBtn.dataset.correct;
-
+ 
   if (isCorrect) {
-  
-  } else {
+    score++;
+    setScore();
+} else {
    
    secondsLeft -= 10;
   }
@@ -144,6 +155,25 @@ function correctAnswer(e) {
   
 }
 
+function setScore(){
+  const player = playerInitials.value;
+  scoreEl.textContent = score;
+  localStorage.setItem("score", score);
+  localStorage.setItem('player', player)
+  localStorage.getItem('player')
+  scorecardInitials.append(player)
+}
+
+function getScore(){
+  const storedScore = JSON.parse(localStorage.getItem('score'));
+
+  if(storedScore === null){
+    score = 0;
+  } else {
+    score = storedScore
+  }
+  playersScore.textContent = score;
+}
 function disableButtons() {
   Array.from(answerEl.children).forEach((button) => {
     button.disabled = true;
@@ -155,25 +185,19 @@ function showNextQuestion(){
     if(currentQuestion < myQuestions.length){
         showQuestions();
     }else{
-       nextBtn.style.display = 'block';
-        endGame();
+        highScores.style.display = 'block';
+        quizEl.style.display = 'none';
+       clearInterval(timer);
+       
     }
 }
 
-function endGame(){
-    clearInterval(timer);
-}
+init()
 
+submitBtn.addEventListener('click', function(e){
+  e.preventDefault();
+  setScore();
+  getScore();
+})
 startBtn.addEventListener("click", startGame);
 
-function logScores(){
-  highScores.style.display = 'block';
-  quizEl.style.display = 'none';
-
-}
-
-
-
-
-
-nextBtn.addEventListener('click', logScores);

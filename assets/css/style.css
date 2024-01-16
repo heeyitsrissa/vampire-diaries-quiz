@@ -90,9 +90,10 @@ body{
     border-radius: 5px;
 }
 
-#next {
-   background-color: #696969;
-   color: #800000;
-   margin-left: 280px;
-   border-radius: 5px;
+#submitHighscore{
+    background-color: #696969;
+    color: #800000;
+    border-color: black;
+    font-size: 20px;
+    border-radius: 5px;
 }

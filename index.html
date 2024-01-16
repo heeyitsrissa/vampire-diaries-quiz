@@ -21,16 +21,19 @@
             <button class="buttons">Answers</button>
             <button class="buttons">Answers</button>
           </ul>
-          <button id="next">Next</button>
+  
         </section>
         <section class="highscores">
           <h2>Highscores</h2>
+          <h3 class="score">Your score</h3>
           <ul id="highscoreList"></ul>
           <div>
-              <label for="initials">Enter Initials: </label>
+              <label  for="initials">Enter Initials: </label>
               <input type="text" id="initials" maxlength="3" />
               <button id="submitHighscore">Submit</button>
-              <button id="showscores">Show Highscores</button>
+              <h2>Saved Scores</h2>
+              <p>Player: <span id="playerInitials"></span></p>
+              <p>Score: <span id="playerScore"></span></p>
           </div>
       </section>
       <script src="./assets/js/script.js"></script>
